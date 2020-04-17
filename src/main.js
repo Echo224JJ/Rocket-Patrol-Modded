@@ -1,3 +1,6 @@
+//Joshua Jung
+//Mods added: 
+
 let config = {
     type: Phaser.CANVAS,
     width: 640,
