@@ -32,10 +32,10 @@ class Play extends Phaser.Scene{
         //add spacechip (x3)
         this.ship01 = new Spaceship(this, game.config.width + 192, 132, 'spaceship', 0, 30).setOrigin(0,0);
         this.ship02 = new Spaceship(this, game.config.width + 96, 196, 'spaceship', 0, 20).setOrigin(0,0);
-        this.ship03 = new Spaceship(this, game.config.width, 260, 'spaceship', 0, 10).setOrigin(0,0);
+        //this.ship03 = new Spaceship(this, game.config.width, 260, 'spaceship', 0, 10).setOrigin(0,0);
         
         //add UFO
-        this.ufo1 = new Ufo(this, game.config.width, 290, 'ufo', 0, 50).setOrigin(0,0);
+        this.ufo1 = new Ufo(this, game.config.width, 260, 'ufo', 0, 50).setOrigin(0,0);
 
         //define keyboard keys
         keyF = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.F);
@@ -97,16 +97,16 @@ class Play extends Phaser.Scene{
             //updatge spaceship
             this.ship01.update();
             this.ship02.update();
-            this.ship03.update();
+            //this.ship03.update();
             //update ufo
             this.ufo1.update();
         }
 
         // check collisions
-        if(this.checkCollision(this.p1Rocket, this.ship03)) {
-            this.p1Rocket.reset();
-            this.shipExplode(this.ship03);
-        }
+        //if(this.checkCollision(this.p1Rocket, this.ship03)) {
+            //this.p1Rocket.reset();
+            //this.shipExplode(this.ship03);
+        //}
         if (this.checkCollision(this.p1Rocket, this.ship02)) {
             this.p1Rocket.reset();
             this.shipExplode(this.ship02);
@@ -164,7 +164,7 @@ class Play extends Phaser.Scene{
     //ufo explosion method
     ufoExplode(ufo) {
         ufo.alpha = 0;
-        let boom = this.add.sprite(ship.x, ship.y, 'explosion').setOrigin(0, 0);
+        let boom = this.add.sprite(ufo.x, ufo.y, 'explosion').setOrigin(0, 0);
         boom.anims.play('explode');             // play explode animation
         boom.on('animationcomplete', () => {    // callback after animation completes
             ufo.reset();                       // reset ship position
