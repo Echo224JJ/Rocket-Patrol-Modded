@@ -1,5 +1,5 @@
 //Joshua Jung
-//Mods added: 
+//Mods added: new scrolling background, moving the rocket after firing
 
 let config = {
     type: Phaser.CANVAS,
@@ -12,6 +12,7 @@ let game = new Phaser.Game(config);
 // define game settings
 game.settings = {
     spaceshipSpeed: 3,
+    ufoSpeed: 5,
     gameTimer: 60000    
 }
 

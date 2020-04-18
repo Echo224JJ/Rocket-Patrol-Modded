@@ -8,6 +8,7 @@ class Play extends Phaser.Scene{
         this.load.image('rocket', './assets/rocket.png');
         this.load.image('spaceship', './assets/spaceship.png');
         this.load.image('starfield', './assets/starfield.png');
+        this.load.image('ufo', './assets/UFO.png');
         //load spritesheet
         this.load.spritesheet('explosion', './assets/explosion.png', {frameWidth: 64, frameHeight: 32, startFrame: 0, endFrame: 9});
     }
@@ -32,6 +33,9 @@ class Play extends Phaser.Scene{
         this.ship01 = new Spaceship(this, game.config.width + 192, 132, 'spaceship', 0, 30).setOrigin(0,0);
         this.ship02 = new Spaceship(this, game.config.width + 96, 196, 'spaceship', 0, 20).setOrigin(0,0);
         this.ship03 = new Spaceship(this, game.config.width, 260, 'spaceship', 0, 10).setOrigin(0,0);
+        
+        //add UFO
+        this.ufo1 = new Ufo(this, game.config.width, 290, 'ufo', 0, 50).setOrigin(0,0);
 
         //define keyboard keys
         keyF = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.F);
@@ -94,6 +98,8 @@ class Play extends Phaser.Scene{
             this.ship01.update();
             this.ship02.update();
             this.ship03.update();
+            //update ufo
+            this.ufo1.update();
         }
 
         // check collisions
@@ -109,6 +115,10 @@ class Play extends Phaser.Scene{
             this.p1Rocket.reset();
             this.shipExplode(this.ship01);
         }
+        if(this.checkCollision(this.p1Rocket, this.ufo1)) {
+            this.p1Rocket.reset();
+            this.ufoExplode(this.ufo1);
+        }
     }
     
     //collision method
@@ -118,6 +128,17 @@ class Play extends Phaser.Scene{
             rocket.x + rocket.width > ship.x && 
             rocket.y < ship.y + ship.height &&
             rocket.height + rocket.y > ship. y) {
+                return true;
+        } else {
+            return false;
+        }
+    }
+    //ufo collision method
+    checkUfoCollision(rocket, ufo){
+        if (rocket.x < ufo.x + ufo.width && 
+            rocket.x + rocket.width > ufo.x && 
+            rocket.y < ufo.y + ufo.height &&
+            rocket.height + ufo.y > ufo. y) {
                 return true;
         } else {
             return false;
@@ -137,6 +158,20 @@ class Play extends Phaser.Scene{
         }); 
         //score increment and repaint
         this.p1Score += ship.points;
+        this.scoreLeft.text = this.p1Score;
+        this.sound.play('sfx_explosion');
+    }
+    //ufo explosion method
+    ufoExplode(ufo) {
+        ufo.alpha = 0;
+        let boom = this.add.sprite(ship.x, ship.y, 'explosion').setOrigin(0, 0);
+        boom.anims.play('explode');             // play explode animation
+        boom.on('animationcomplete', () => {    // callback after animation completes
+            ufo.reset();                       // reset ship position
+            ufo.alpha = 1;                     // make ship visible again
+            boom.destroy();                     // remove explosion sprite
+    });
+        this.p1Score += ufo.points;
         this.scoreLeft.text = this.p1Score;
         this.sound.play('sfx_explosion');
     }
