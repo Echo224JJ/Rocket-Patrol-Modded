@@ -157,9 +157,26 @@ class Play extends Phaser.Scene{
             boom.destroy();                     // remove explosion sprite
         }); 
         //score increment and repaint
+        let soundChoice = Math.floor(Math.random() * 4) + 1; 
         this.p1Score += ship.points;
         this.scoreLeft.text = this.p1Score;
-        this.sound.play('sfx_explosion');
+        //this.sound.play('sfx_explosion-4');
+        if(soundChoice == 1)
+        {
+            this.sound.play('sfx_explosion-1');
+        }
+        if(soundChoice == 2)
+        {
+            this.sound.play('sfx_explosion-2');
+        }
+        if(soundChoice == 3)
+        {
+            this.sound.play('sfx_explosion-3');
+        }
+        else
+        {
+            this.sound.play('sfx_explosion-4');
+        }
     }
     //ufo explosion method
     ufoExplode(ufo) {
