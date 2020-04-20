@@ -1,5 +1,6 @@
 //Joshua Jung
-//Mods added: new scrolling background, moving the rocket after firing
+//Mods added: new scrolling background, moving the rocket after firing, new spaceship class called UFO that is faster and smaller
+//than the regular spaceship, created new art assets for each original asset,
 
 let config = {
     type: Phaser.CANVAS,
